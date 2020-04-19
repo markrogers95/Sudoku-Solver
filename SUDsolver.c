@@ -1,31 +1,23 @@
 /* Contains the functions called by main to solve
- * the sudoku.
+ * the sudoku. 
  * 
- * All functions return boolean values hence the 
- * need for stdbool.h.
+ *      - Check() functions for row/column/box.
+ *      - findEmpty() function to return first empty
+ *        cell.
+ *      - validate() function calls check functions
+ *        to check validity of insertion.
+ *      - solver() is the main function here. Works
+ *        recursively checking al possible combinations.
+ *        Calls:
+ *          - findEmpty()
+ *          - validate()
+ *          - solver()
  */
 
 #include<stdio.h>
 #include <stdbool.h>
 
 #include "SUDhead.h"
-
-bool findEmpty(int arr[n][n], int *pRow, int *pCol)
-{
-    for (int row = 0; row < 9; row++)
-    {
-        for (int col = 0; col < 9; col++)
-        {
-            if (arr[row][col] == EMPTY)
-            {   
-                *pRow = row;
-                *pCol = col;
-                 return true;
-            }
-        }
-    }
-    return false;
-}
 
 bool rowCheck(int arr[n][n], int row, int val)
 {
@@ -57,21 +49,39 @@ bool boxCheck(int arr[n][n], int boxRowStart, int boxColStart, int val)
     return false;
 }
 
+bool findEmpty(int arr[n][n], int *pRow, int *pCol)
+{
+    for (int row = 0; row < 9; row++)
+    {
+        for (int col = 0; col < 9; col++)
+        {
+            if (arr[row][col] == EMPTY)
+            {   
+                *pRow = row;
+                *pCol = col;
+                 return true;
+            }
+        }
+    }
+    return false;
+}
+
 bool validate(int arr[n][n], int row, int col, int val)
 {
     return !rowCheck(arr, row, val) &&
            !colCheck(arr, col, val) &&
            !boxCheck(arr, row - row % 3, col - col % 3, val) &&
-           arr[row][col] == EMPTY;
+            arr[row][col] == EMPTY;
 }
-
-
 
 bool solver(int arr[n][n])
 {
     int row, col; 
 
-    if (!findEmpty(arr, &row, &col)) return true;
+    if (!findEmpty(arr, &row, &col))
+    {
+        return true;
+    }
 
     for (int val = 1; val <=9; val++)
     {
@@ -79,7 +89,10 @@ bool solver(int arr[n][n])
         {
             arr[row][col] = val;
             
-            if(solver(arr)) return true;
+            if(solver(arr))
+            {
+                return true;
+            }
 
             arr[row][col] = EMPTY;
         }
