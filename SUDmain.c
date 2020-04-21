@@ -20,6 +20,11 @@ void printSud(int arr[n][n]);
 
 int main(int argc, char *argv[])
 {
+    mode_t flags = {0, 0};
+    
+    argValidate(argc, argv, &flags);
+    printf("\nFile output: %d\n", flags.file);
+
     int sud[n][n] = {{0,0,0,8,2,0,0,6,0},
                      {0,9,1,0,0,0,0,4,0},
                      {5,0,0,0,1,0,0,0,2},
