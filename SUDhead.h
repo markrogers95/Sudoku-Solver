@@ -8,6 +8,6 @@ typedef struct {
     int file;
 } mode_t;
 
-void argValidate (int argc, char *argv[], mode_t *mode );
+int argValidate (int argc, char *argv[], mode_t *mode );
 bool solver(int sud[n][n]);
 void printSud(int sud[n][n]);

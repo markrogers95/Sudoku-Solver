@@ -1,18 +1,19 @@
-/* Currently input must be hard coded and
- * compiled against. Not ideal and will change
- * this soon.
+/* Currently input must be hard coded and compiled against. 
+ * This is not ideal and will be changed next.
  * 
- * Main will eventually assess command line
- * arguments and read/write either from/to
- * stdin/stdout or file.
+ * Main processes command line arguments to determine mode.
  * 
- * Currently the print functions sits here 
- * but will most likely be moved when more 
- * utility functions are added.
+ * Sudoku will be initiliased and either directly input by
+ * or read from file.
+ * 
+ * Sudoku is then solved and sent to screen, or back to file. 
+ * 
  */
 
 #include <stdio.h>
+#include<stdlib.h>
 #include <stdbool.h>
+#include <assert.h>
 
 #include "SUDhead.h"
 
@@ -20,10 +21,17 @@ void printSud(int arr[n][n]);
 
 int main(int argc, char *argv[])
 {
-    mode_t flags = {0, 0};
-    
-    argValidate(argc, argv, &flags);
-    printf("\nFile output: %d\n", flags.file);
+
+    //initialise mode structure
+    mode_t *mode;
+    mode = (mode_t *) malloc(sizeof(mode_t));
+    assert(mode != NULL);
+
+    //validate arguments, process flags and verify files
+    if (argValidate(argc, argv, mode) != 0){
+        printf("Aborting program due to invalid file argument.");
+        return -1;
+    }
 
     int sud[n][n] = {{0,0,0,8,2,0,0,6,0},
                      {0,9,1,0,0,0,0,4,0},
@@ -38,6 +46,7 @@ int main(int argc, char *argv[])
     if (solver(sud) == true) printSud(sud);
     else printf("Nope, impossible.");
 
+    free (mode);
     return 0;
 }
 

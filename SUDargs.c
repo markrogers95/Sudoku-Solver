@@ -10,12 +10,15 @@
 
 #include "SUDhead.h"
 
-void argValidate (int argc, char *argv[], mode_t *mode ){
+int argValidate (int argc, char *argv[], mode_t *mode ){
+
+    mode->check = 0;
+    mode->file = 0;
 
     printf("Checking arguments.. ");
     if (argc < 2){
         printf("no CLIs passed. Returning to main in default mode.\n");
-        return;
+        return 0;
     }
     printf("\n");
     for (int i = 2; i < argc + 1; i++){
@@ -40,12 +43,21 @@ void argValidate (int argc, char *argv[], mode_t *mode ){
                     }
                 }
                 else{
-                    printf("\n-%c is not a valid command line", argv[i-1][j]);
+                    printf("-%c is not a valid command line", argv[i-1][j]);
                     printf(" argument. It will be ignored.\n");
                 }
             }
         }
-        else printf("%s is a FILE to be verified.\n", argv[i-1]);
+        else{
+            printf("Checking validity of %s.. ", argv[i-1]);
+            if ( fopen(argv[i-1], "r") != NULL){
+                printf("%s validated, ready to read. \n", argv[i-1]);
+            }
+            else{
+                printf("Invalid file, passing control to main for abort.\n");
+                return -1;
+            }
+        }
     }
     printf("Finished validating arguments..");
 
@@ -63,5 +75,5 @@ void argValidate (int argc, char *argv[], mode_t *mode ){
     }
     else printf("returning to main in DEFAULT mode.");
 
-    return;
+    return 0;
 }
