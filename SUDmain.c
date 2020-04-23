@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
 
     //validate arguments, process flags and verify files
     if (argValidate(argc, argv, mode) != 0){
-        printf("Aborting program due to invalid file argument.");
+        printf("Aborting program - invalid argument(s).");
         return -1;
     }
 
