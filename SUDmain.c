@@ -1,13 +1,10 @@
-/* Currently input must be hard coded and compiled against. 
- * This is not ideal and will be changed next.
+/* Main processes command line arguments to determine mode.
  * 
- * Main processes command line arguments to determine mode.
+ * Sudoku will be initiliased and either input from stdin
+ * or by a read from file - currently functionality only
+ * extends to one file.
  * 
- * Sudoku will be initiliased and either directly input by
- * or read from file.
- * 
- * Sudoku is then solved and sent to screen, or back to file. 
- * 
+ * Sudoku is then solved and sent to screen, or back to file.  
  */
 
 #include <stdio.h>
@@ -22,30 +19,26 @@ void printSud(int arr[n][n]);
 int main(int argc, char *argv[])
 {
 
-    //initialise mode structure
     mode_t *mode;
     mode = (mode_t *) malloc(sizeof(mode_t));
     assert(mode != NULL);
 
-    //validate arguments, process flags and verify files
     if (argValidate(argc, argv, mode) != 0){
         printf("Aborting program - invalid argument(s).");
         return -1;
     }
 
-    int sud[n][n] = {{0,0,0,8,2,0,0,6,0},
-                     {0,9,1,0,0,0,0,4,0},
-                     {5,0,0,0,1,0,0,0,2},
-                     {0,0,0,5,0,0,0,2,8},
-                     {0,0,7,0,0,0,6,0,0},
-                     {9,5,0,0,0,1,0,0,0},
-                     {3,0,0,0,7,0,0,0,6},
-                     {0,7,0,0,0,0,4,1,0},
-                     {0,4,0,0,6,5,0,0,0}};
+    int sudoku[n][n];
 
-    if (solver(sud) == true) printSud(sud);
-    else printf("Nope, impossible.");
+    sudInit(sudoku, mode, argv, argc);
 
+    if (solver(sudoku) == true){
+
+        printf("Solved successfully! Solution:\n");   
+        printSud(sudoku);
+    }
+    else printf("No solutions found.");
+    
     free (mode);
     return 0;
 }
@@ -56,7 +49,7 @@ void printSud(int arr[n][n])
     {
         for (int col = 0; col < n; col++)
         {
-            printf("%d %s", arr[row][col], " ");
+            printf("%d ", arr[row][col]);
         }
         printf ("\n");
     }
