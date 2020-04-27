@@ -1,10 +1,12 @@
 # Sudoku-Solver
 A Sudoku solver implementing a backtracking algorithm.
 
-Users should be able to pass their sudoku to the solver either by file or direct command line input. This should be governed by arguemnts when starting the solver.
+Users should be able to pass their sudoku puzzle to the solver ONLY by file as direct input of 99 characters on the command line is too tedious.
 
-The solver should run in one of two modes, either a "check" mode or a "solve" mode.
+The output of the solver should be printed either directly to the command line or ouput to a file SUDsolution.txt. The former should be the defualt behaviour.
 
-If running in "check" mode the user should enter their attempt at solving the sudoku and be returned a message indicating if they are correct so far, or not. In the case that the solver shows the user to be incorrect, the user should also be returned the first wrong entry (in row-column order).
+The solver itself should run in one of two modes, either a "check" mode or a "solve" mode with the latter being the default behaviour.
 
-If running in "solve" mode the solver should return the correctly completed sudoku to the user, either on the command line or written to file, dependent on input method.
+If running in "check" mode the user should enter their attempt at solving the sudoku via the command line and on top of their already submitted sudoku file. They should be then be returned a message indicating if they are correct so far or not. In the case that the solver shows the user to be incorrect, the user should also be returned the first wrong entry (in row-column order).
+
+If running in "solve" mode the solver should return the correctly completed sudoku to the user, either on the command line or written to file, dependent on mode.
