@@ -14,43 +14,43 @@
 
 #include "SUDhead.h"
 
-void printSud(int arr[n][n]);
-
 int main(int argc, char *argv[])
 {
+    printf("\n");
 
     mode_t *mode;
     mode = (mode_t *) malloc(sizeof(mode_t));
     assert(mode != NULL);
-
+  
     if (argValidate(argc, argv, mode) != 0){
-        printf("Aborting program - invalid argument(s).");
+        printf("Aborting program - invalid argument(s).\n\n");
         return -1;
     }
 
     int sudoku[n][n];
 
     sudInit(sudoku, mode, argv, argc);
+    printf("\n");
 
     if (solver(sudoku) == true){
 
-        printf("Solved successfully! Solution:\n");   
-        printSud(sudoku);
+        printf("Solved successfully! ");
+
+        if (mode->fileout == 1){
+
+            printSudFile(sudoku);
+            printf("Solution written to file SUDsolution.txt.");
+            printf("\n");
+        }
+        else{
+            printf("Solution:\n");
+            printf("\n");   
+            printSud(sudoku);
+        }
     }
     else printf("No solutions found.");
     
     free (mode);
+    printf("\n");
     return 0;
-}
-
-void printSud(int arr[n][n])
-{
-    for (int row = 0; row < n; row++)
-    {
-        for (int col = 0; col < n; col++)
-        {
-            printf("%d ", arr[row][col]);
-        }
-        printf ("\n");
-    }
 }

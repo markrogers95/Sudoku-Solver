@@ -36,12 +36,13 @@ void sudFileRead(int sud[n][n], FILE *readFile){
 
         ch = fgetc(readFile);
     }
-}
+} 
 
 void sudInit(int sud[n][n], mode_t *mode, char *argv[], int argc){
 
-    if (argc > 1){
+    if (mode->filein == 1){
 
+        printf("File(s) detected on command line. ");
         FILE *sudFile;
 
         for (int i = 1; i < argc ; i++){
