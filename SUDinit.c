@@ -38,23 +38,17 @@ void sudFileRead(int sud[n][n], FILE *readFile){
     }
 } 
 
-void sudInit(int sud[n][n], mode_t *mode, char *argv[], int argc){
+void sudInit(int sud[n][n], char *argv){
 
-    if (mode->filein == 1){
+    FILE *sudFile;
+   
+    sudFile = fopen(argv, "r");
 
-        printf("File(s) detected on command line. ");
-        FILE *sudFile;
+    if (sudFile){
 
-        for (int i = 1; i < argc ; i++){
+            sudFileRead(sud, sudFile);
+            printf("Successfully read sudoku from %s.\n", argv);
 
-            sudFile = fopen(argv[i], "r");
-
-            if (sudFile){
-
-                sudFileRead(sud, sudFile);
-                printf("Successfully read sudoku from %s.\n", argv[i]);
-                return;
-            }
-        }
+            return;
     }
 }

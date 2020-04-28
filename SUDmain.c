@@ -27,28 +27,37 @@ int main(int argc, char *argv[])
         return -1;
     }
 
-    int sudoku[n][n];
-
-    sudInit(sudoku, mode, argv, argc);
+    printf("Found %d file(s) to process.\n", mode->filecount);
     printf("\n");
 
-    if (solver(sudoku) == true){
+    int sudoku[n][n];
 
-        printf("Solved successfully! ");
+    for (int i = 0; i < sizeof(mode->filepos)/sizeof(int); i++){
 
-        if (mode->fileout == 1){
+        if (mode->filepos[i]){
 
-            printSudFile(sudoku);
-            printf("Solution written to file SUDsolution.txt.");
-            printf("\n");
-        }
-        else{
-            printf("Solution:\n");
-            printf("\n");   
-            printSud(sudoku);
+            sudInit(sudoku, argv[mode->filepos[i]]);
+
+            if (solver(sudoku) == true){
+
+                printf("\nThis puzzle is solveable!");
+
+                if (mode->fileout == 1){
+
+                    printSudFile(sudoku);
+                    printf("\nSolution written to file SUDsolution.txt.\n");
+                    printf("\n");
+                }
+                else{
+                    printf("\nSolution:\n");
+                    printf("\n");   
+                    printSud(sudoku);
+                    printf("\n");
+                }
+            }
+            else printf("\nThere are no solutions to this puzzle!\n");
         }
     }
-    else printf("No solutions found.");
     
     free (mode);
     printf("\n");

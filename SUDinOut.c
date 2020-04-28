@@ -15,6 +15,9 @@ int argValidate (int argc, char *argv[], mode_t *mode ){
     mode->check = 0;
     mode->fileout = 0;
     mode->filein = 0;
+    mode->filein = 0;
+
+    int filePosIt = 0;
 
     printf("Validating arguments and setting mode.\n");
     if (argc < 2){
@@ -50,6 +53,11 @@ int argValidate (int argc, char *argv[], mode_t *mode ){
             printf("Checking file: %s. ", argv[i-1]);
             if ( fopen(argv[i-1], "r") != NULL){
                 printf("File verified.\n", argv[i-1]);
+                
+                mode->filecount++;
+                mode->filepos[filePosIt] = i - 1;
+                filePosIt++;
+
                 if (mode->filein != 1){
                     mode->filein = 1;
                 }
@@ -65,14 +73,10 @@ int argValidate (int argc, char *argv[], mode_t *mode ){
         return -1;
     }
     printf("Finished work.. returning with mode(s): ");
-
-    if (mode->fileout == 1){
-        
+    if (mode->fileout == 1){        
         printf("FILEout ");
     }
-
-    if (mode->check == 1){
-        
+    if (mode->check == 1){   
         printf("CHECK\n");
     }
     else printf("DEFAULT\n");
@@ -97,8 +101,19 @@ void printSud(int arr[n][n])
 void printSudFile(int arr[n][n])
 {
     FILE * sudFile;
+    static int count = 1;
 
-    sudFile = fopen("SUDsolution.txt", "w");
+    if (fopen("SUDsolution.txt", "r"))
+    {
+        sudFile = fopen("SUDsolution.txt", "a");
+    }
+    else
+    {
+        sudFile = fopen("SUDsolution.txt", "w");
+    }
+    
+    fprintf(sudFile, "Solution %d:\n", count);
+    fprintf(sudFile, "\n");
 
     for (int row = 0; row < n; row++)
     {
@@ -108,4 +123,6 @@ void printSudFile(int arr[n][n])
         }
         fprintf(sudFile, "\n");
     }
+    fprintf(sudFile, "\n");
+    count++;
 }
