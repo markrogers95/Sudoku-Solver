@@ -15,6 +15,9 @@ typedef struct {
 
 int argValidate (int argc, char *argv[], mode_t *mode );
 void sudInit(int sud[n][n], char *argv);
+
 bool solver(int sud[n][n]);
-void printSud(int sud[n][n]);
-void printSudFile(int sud[n][n]);
+void checkMode(int sud[n][n], int sudcpy[n][n]);
+
+void printSud(int sud[n][n], mode_t *mode);
+void printSudFile(int sud[n][n], mode_t *mode);
