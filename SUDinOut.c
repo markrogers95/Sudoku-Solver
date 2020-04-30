@@ -7,6 +7,7 @@
 
 #include<stdio.h>
 #include <string.h>
+#include<stdlib.h>
 
 #include "SUDhead.h"
 
@@ -86,8 +87,17 @@ int argValidate (int argc, char *argv[], mode_t *mode ){
     return 0;
 }
 
-void printSud(int arr[n][n])
+void printSud(int arr[n][n], mode_t *mode)
 {
+    static int count = 1;
+
+    if (mode->check ==1){
+        printf("\nPartial solution %d:\n", count);
+    }
+    else printf("Solution %d:\n", count);
+
+    printf("\n");
+
     for (int row = 0; row < n; row++)
     {
         for (int col = 0; col < n; col++)
@@ -96,9 +106,11 @@ void printSud(int arr[n][n])
         }
         printf ("\n");
     }
+
+    count++;
 }
 
-void printSudFile(int arr[n][n])
+void printSudFile(int arr[n][n], mode_t *mode)
 {
     FILE * sudFile;
     static int count = 1;
@@ -112,8 +124,15 @@ void printSudFile(int arr[n][n])
         sudFile = fopen("SUDsolution.txt", "w");
     }
     
-    fprintf(sudFile, "Solution %d:\n", count);
-    fprintf(sudFile, "\n");
+    if (mode->check == 1){
+        fprintf(sudFile, "Not bad, partial solution %d, try again from here:\n", count);
+        fprintf(sudFile, "\n");
+
+    }
+    else{
+        fprintf(sudFile, "Solution %d:\n", count);
+        fprintf(sudFile, "\n");
+    }
 
     for (int row = 0; row < n; row++)
     {
@@ -125,4 +144,38 @@ void printSudFile(int arr[n][n])
     }
     fprintf(sudFile, "\n");
     count++;
+}
+
+void checkMode(int sud[n][n], int sudcpy[n][n]){
+
+    printf("\nFollow the instructions to check your efforts.\n");
+    printf("Enter the row number, followed by the column number,"
+            " followed by the value you wish to insert."
+            "\nPlease remember that array indexing starts at zero!\n");
+
+    int i, j;
+    while (sud != sudcpy){
+              
+        int v;
+
+        printf("\nEnter row: ");
+        scanf("%d", &i);
+
+        printf("Enter column: ");
+        scanf("%d", &j);
+
+        printf("Enter value: ");
+        scanf("%d", &v);
+        sudcpy[i][j] = v;
+
+        if (sud[i][j] != sudcpy[i][j]){
+
+            printf("\nNot quite!");
+            sudcpy[i][j] = 0;
+            return;
+        }
+
+    }
+    return;
+
 }
