@@ -1,15 +1,6 @@
-/* Main processes command line arguments to determine mode.
- * 
- * Sudoku will be initiliased and either input from stdin
- * or by a read from file - currently functionality only
- * extends to one file.
- * 
- * Sudoku is then solved and sent to screen, or back to file.  
- */
-
 #include <stdio.h>
-#include<stdlib.h>
-#include<string.h>
+#include <stdlib.h>
+#include <string.h>
 #include <stdbool.h>
 #include <assert.h>
 
@@ -23,9 +14,15 @@ int main(int argc, char *argv[])
     mode = (mode_t *) malloc(sizeof(mode_t));
     assert(mode != NULL);
   
-    if (argValidate(argc, argv, mode) != 0){
-        printf("Aborting program - invalid argument(s).\n\n");
-        return -1;
+    int i = argValidate(argc, argv, mode);
+
+    if (i != 0){
+
+        if (i == -1){
+            printf("Aborting program - invalid argument(s).\n\n");
+            return -1;
+        }
+        else return -1;
     }
 
     printf("Found %d file(s) to process.\n", mode->filecount);

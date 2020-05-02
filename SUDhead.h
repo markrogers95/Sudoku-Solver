@@ -4,6 +4,7 @@
 #define EMPTY 0
 
 typedef struct {
+    
     int check;
     int fileout;
     int filein;
@@ -14,6 +15,7 @@ typedef struct {
 } mode_t;
 
 int argValidate (int argc, char *argv[], mode_t *mode );
+
 void sudInit(int sud[n][n], char *argv);
 
 bool solver(int sud[n][n]);

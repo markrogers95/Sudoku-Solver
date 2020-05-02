@@ -1,22 +1,5 @@
-/* Contains the functions called by main to solve
- * the sudoku. 
- * 
- *      - Check() functions for row/column/box.
- *      - findEmpty() function to return first empty
- *        cell.
- *      - validate() function calls check functions
- *        to check validity of insertion.
- *      - solver() is the main function here. Works
- *        recursively checking al possible combinations.
- *        Calls:
- *          - findEmpty()
- *          - validate()
- *          - solver()
- */
-
-#include<stdio.h>
+#include <stdio.h>
 #include <stdbool.h>
-
 #include "SUDhead.h"
 
 bool rowCheck(int arr[n][n], int row, int val)

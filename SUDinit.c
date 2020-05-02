@@ -1,9 +1,5 @@
-/* Contains functions for setting the sudoku
- * either from input file or from stdin.
- */
-
 #include <stdio.h>
-#include<stdlib.h>
+#include <stdlib.h>
 #include <string.h>
 
 #include "SUDhead.h"
@@ -18,9 +14,9 @@ void sudFileRead(int sud[n][n], FILE *readFile){
 
     while (ch != EOF && i < 9){
 
-        if (ch == ' ' || ch == '\n' 
-                      || ch == ',' || ch == '{' 
-                      || ch == '}'){
+        if (ch == ' ' || ch == '\n' || ch == ',' 
+                      || ch == '{'  || ch == '}' 
+                      || ch == '('  || ch == ')'){
             
             ch = fgetc(readFile);
             continue;
@@ -36,6 +32,7 @@ void sudFileRead(int sud[n][n], FILE *readFile){
 
         ch = fgetc(readFile);
     }
+    return;
 } 
 
 void sudInit(int sud[n][n], char *argv){
@@ -48,7 +45,6 @@ void sudInit(int sud[n][n], char *argv){
 
             sudFileRead(sud, sudFile);
             printf("Successfully read sudoku from %s.\n", argv);
-
             return;
     }
 }
