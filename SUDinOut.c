@@ -1,15 +1,10 @@
-/* Contains the functions concerned with argument
- * validation from the command.
- * 
- * To set flags in the mode structure and verify
- * file input also.
- */
-
-#include<stdio.h>
+#include <stdio.h>
 #include <string.h>
-#include<stdlib.h>
+#include <stdlib.h>
 
 #include "SUDhead.h"
+
+static void printHelp();
 
 int argValidate (int argc, char *argv[], mode_t *mode ){
 
@@ -22,8 +17,8 @@ int argValidate (int argc, char *argv[], mode_t *mode ){
 
     printf("Validating arguments and setting mode.\n");
     if (argc < 2){
-        printf("No CLIs passed. Returning to main in default mode.\n");
-        return 0;
+        printHelp();
+        return 1;
     }
     
     for (int i = 2; i < argc + 1; i++){
@@ -149,9 +144,9 @@ void printSudFile(int arr[n][n], mode_t *mode)
 void checkMode(int sud[n][n], int sudcpy[n][n]){
 
     printf("\nFollow the instructions to check your efforts.\n");
-    printf("Enter the row number, followed by the column number,"
-            " followed by the value you wish to insert."
-            "\nPlease remember that array indexing starts at zero!\n");
+    printf("Enter the row number, followed by the column number, "
+           "followed by the value you wish to insert."
+           "\nPlease remember that array indexing starts at zero!\n");
 
     int i, j;
     while (sud != sudcpy){
@@ -177,5 +172,34 @@ void checkMode(int sud[n][n], int sudcpy[n][n]){
 
     }
     return;
+}
 
+void printHelp(){
+
+    printf("\nSudoku-Solver help:");
+    printf("\n");
+    printf("\nFirst start by entering your Sudoku in a regular text file - "
+           "notepad as an editor would suffice.\nYou can enter your Sudoku enclosed "
+           "between '{}' or '()' braces, spread over 9 lines, delimited with spaces "
+           "\nand/or commas as you wish, but no other characters should be entered. "
+           "Where the puzzle shows a blank square \nplease enter 0. You can then pass the name of " 
+           "this file as an argument on the command line for solving, \nsupplying the "
+           "relevent path if it is not located in the same directory.");
+    printf("\n");
+    printf("\nBy default the solver will solve the Sudoku and print the output to screen. "
+           "If you wish for different behaviour, \nyou must specify on the command line. "
+           "Enter '-f' to set output to file and use '-c' to enter check mode. \nAny arguments "
+           "not preceeded by a hyphon will be interpreted as files for validating.");
+    printf("\n");
+    printf("\nIf in check mode the solver will ask you to enter your attempted solution "
+           "and only stop you when you are wrong \nor have solved the puzzle. In "
+           "the case you are wrong the solver will return to you a partial solution with "
+           "your \ncorrect guesses so far.");
+    printf("\n");
+    printf("\nAs mentioned, by default the output will be printed to screen but if you "
+           "choose to have the output written to file \nyou will find this in a regular "
+           "text file, SUDsolution.txt, in the directory you are running from.");
+    printf("\n");
+    printf("\nEnjoy!\n");
+    printf("\n");
 }
